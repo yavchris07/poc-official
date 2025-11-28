@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 export default function Home() {
   const route = useRouter();
-  const date = new Date()
+  const date = new Date();
 
   return (
     <div className="min-h-screen bg-zinc-50 font-san">
@@ -55,7 +55,9 @@ export default function Home() {
 
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
               Proof of capacity est une plateforme qui vous permet de prouver la
-              competence
+              competence et d&apos;augmenter votre chance d&apos;etre embaucher,
+              non par affinite, ni reseau d&apos;influence mais uniquement par
+              merite
             </p>
 
             {/* Trust Badges */}
@@ -77,11 +79,12 @@ export default function Home() {
         </div>
       </section>
       {/*  */}
+      
       {/*  */}
 
       {/* Footer */}
       <footer className="py-12 border-t border-gray-100">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
