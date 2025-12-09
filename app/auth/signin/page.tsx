@@ -1,49 +1,73 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 // import { Button } from '@/components/ui/Button';
-import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Eye, EyeOff, Mail, Lock, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
-      // Simulation de login - À remplacer par votre API
-      console.log('Login attempt:', formData);
-      
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login/`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      console.log("Login attempt:", email, password);
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+      localStorage.setItem("man", data.user.email);
+      localStorage.setItem("man1", data.user.first_name);
+      localStorage.setItem("man2", data.user.last_name);
+
       // Redirection temporaire pour la démo
       setTimeout(() => {
-        router.push('/dashboard');
+        // if(){}
+        router.push("/connect");
+        // router.push('/dashboard')
       }, 1000);
-      
     } catch (err) {
-      setError('Email ou mot de passe incorrect');
+      setError("Email ou mot de passe incorrect");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
   return (
     <div className="w-full max-w-md">
@@ -51,11 +75,9 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-linear-to-r from-cardano-blue to-cardano-light rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-8 h-8 text-white" />
+            <Lock className="w-8 h-8 text-blue-400" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Connexion
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Connexion</h1>
           <p className="text-gray-600">
             Accédez à votre compte Proof of Capacity
           </p>
@@ -73,7 +95,10 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Adresse email
             </label>
             <div className="relative">
@@ -83,8 +108,8 @@ export default function LoginPage() {
                 name="email"
                 type="email"
                 required
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 text-gray-400 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
                 placeholder="votre@email.com"
               />
@@ -92,7 +117,10 @@ export default function LoginPage() {
           </div>
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Mot de passe
             </label>
             <div className="relative">
@@ -100,10 +128,10 @@ export default function LoginPage() {
               <input
                 id="password"
                 name="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 required
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-12 py-3 border border-gray-300 text-gray-400 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors"
                 placeholder="Votre mot de passe"
               />
@@ -112,7 +140,11 @@ export default function LoginPage() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
@@ -124,10 +156,12 @@ export default function LoginPage() {
                 type="checkbox"
                 className="w-4 h-4 text-cardano-blue border-gray-300 rounded focus:ring-cardano-blue"
               />
-              <span className="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
+              <span className="ml-2 text-sm text-gray-600">
+                Se souvenir de moi
+              </span>
             </label>
-            <Link 
-              href="/forgot-password" 
+            <Link
+              href="/forgot-password"
               className="text-sm text-blue-600 hover:text-blue-400 font-medium"
             >
               Mot de passe oublié ?
@@ -146,7 +180,7 @@ export default function LoginPage() {
                 Connexion...
               </div>
             ) : (
-              'Se connecter'
+              "Se connecter"
             )}
           </Button>
         </form>
@@ -161,10 +195,10 @@ export default function LoginPage() {
         {/* Register Link */}
         <div className="text-center">
           <p className="text-gray-600">
-            Nouveau sur Proof of Capacity ?{' '}
-            <Link 
-              href="/auth/signup" 
-              className="text-cardano-blue hover:text-cardano-light font-semibold"
+            Nouveau sur Proof of Capacity ?{" "}
+            <Link
+              href="/auth/signup"
+              className="text-cardano-blue hover:text-blue-400 font-semibold"
             >
               Créer un compte
             </Link>

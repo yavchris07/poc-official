@@ -10,11 +10,11 @@ export default function DashboardLayout({
   return (
     // <AuthProvider>
       <div className="min-h-screen bg-gray-50">
-        <DashboardSidebar />
+        {/* <DashboardSidebar /> */}
         <div className="lg:pl-64">
           <DashboardHeader />
           <main className="py-8">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
               {children}
             </div>
           </main>

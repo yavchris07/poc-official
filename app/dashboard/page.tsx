@@ -12,9 +12,11 @@ import {
   CheckCircle,
   Play,
   Star,
-  Target
+  Target,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import DashboardLayout from './layout';
+import { MapPin } from '@/components/ui/map-pin';
 // import { Button } from '@/components/ui/Button';
 
 // Données simulées - À remplacer par votre API
@@ -85,32 +87,33 @@ export default function DashboardPage() {
   const [user, setUser] = useState(userData);
 
   return (
-    <div className="space-y-8">
+    // <DashboardLayout>
+    <div className="space-y-2">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-cardano-blue to-cardano-light rounded-2xl p-8 text-white">
+      <div className="bg-linear-to-r from-cardano-blue to-cardano-light rounded-2xl p-8 text-white">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center">
           <div>
-            <h1 className="text-3xl font-bold mb-2">
-              Bon retour, {user.name} ! 👋
+            <h1 className="text-3xl text-gray-400 font-bold mb-2">
+              Bon retour, {localStorage.getItem('man1')} {localStorage.getItem('man2')}! 👋
             </h1>
-            <p className="text-blue-100 text-lg">
+            <p className="text-blue-300 text-lg">
               Continuez votre parcours vers la certification blockchain
             </p>
             <div className="flex items-center mt-4 space-x-4 text-sm">
               <div className="flex items-center space-x-1">
-                <MapPin className="w-4 h-4" />
-                <span>{user.location}</span>
+                <MapPin className="w-4 h-4 bg-amber-950" />
+                <span className='text-gray-400'>{user.location}</span>
               </div>
               <div className="flex items-center space-x-1">
-                <Award className="w-4 h-4" />
-                <span>{user.certifications} certifications</span>
+                <Award className="w-4 h-4 bg-amber-950" />
+                <span className='text-gray-400'>{user.certifications} certifications</span>
               </div>
             </div>
           </div>
-          <div className="mt-4 lg:mt-0 bg-white/20 rounded-lg p-4 backdrop-blur-sm">
+          <div className="mt-4 lg:mt-0 bg-gray-300 rounded-lg p-4 backdrop-blur-sm">
             <div className="text-center">
-              <div className="text-2xl font-bold">{user.progress}%</div>
-              <div className="text-blue-100 text-sm">Progression globale</div>
+              <div className="text-2xl text-gray-500 font-bold">{user.progress}%</div>
+              <div className="text-blue-300 text-sm">Progression globale</div>
             </div>
           </div>
         </div>
@@ -179,7 +182,7 @@ export default function DashboardPage() {
         {/* Cours en Progrès */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Cours en cours</h2>
+            <h2 className="text-xl font-bold text-gray-900">Mes cours en cours</h2>
             <Link href="/dashboard/training">
               <Button variant="ghost" className="text-cardano-blue">
                 Voir tout
@@ -290,7 +293,7 @@ export default function DashboardPage() {
               </p>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
-                  className="bg-gradient-to-r from-cardano-blue to-cardano-light h-2 rounded-full transition-all duration-300"
+                  className="bg-linear-to-r from-cardano-blue to-cardano-light h-2 rounded-full transition-all duration-300"
                   style={{ width: `${courses.find(c => c.id === 2)?.progress || 0}%` }}
                 ></div>
               </div>
@@ -299,7 +302,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <Link href="/dashboard/training/2" className="mt-4 lg:mt-0">
-              <Button className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600">
+              <Button className="bg-linear-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600">
                 <Play className="w-4 h-4 mr-2" />
                 Continuer le cours
               </Button>
@@ -326,13 +329,7 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+    // </DashboardLayout>
+
   );
 }
-
-// Composant MapPin manquant
-const MapPin = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-  </svg>
-);

@@ -1,69 +1,134 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Mail, Lock, User, MapPin, AlertCircle, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  MapPin,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    location: 'Goma',
-    password: '',
-    confirmPassword: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   first_name: "",
+  //   last_name: "",
+  //   email: "",
+  //   password: "",
+  //   password_confirm: "",
+  // });
+
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirm, setPasswdConfirm] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     // Validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas');
+    if (password !== password_confirm) {
+      setError("Les mots de passe ne correspondent pas");
       setIsLoading(false);
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères');
+    if (password.length < 6) {
+      setError("Le mot de passe doit contenir au moins 6 caractères");
       setIsLoading(false);
       return;
     }
 
     try {
       // Simulation d'inscription - À remplacer par votre API
-      console.log('Registration attempt:', formData);
-      
+      // email', 'first_name', 'last_name', 'password', 'password_confirm'
+
+      // const data = new FormData();
+      // data.append("first_name", formData.first_name);
+      // data.append("last_name", formData.last_name);
+      // data.append("email", formData.email);
+      // data.append("password", formData.password);
+      // data.append("password_confirm", formData.password_confirm);
+
+      // const response = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/auth/register/`,
+      //   {
+      //     method: "POST",
+      //     body: data, // ✔ pas de JSON
+      //     // PAS de Content-Type, le navigateur le met automatiquement
+      //   }
+      // );
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register/`,
+        {
+          method: "POST",
+          // credentials: "include",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            first_name,
+            last_name,
+            email,
+            password,
+            password_confirm,
+          }),
+          // body:formDate
+        }
+      );
+
+      console.log(
+        "Registration attempt:",
+        first_name,
+        last_name,
+        email,
+        password,
+        password_confirm
+      );
+
       // Simulation d'envoi d'email de vérification
-      setSuccess('Un email de vérification a été envoyé à votre adresse');
-      
+      if (!response.ok) throw new Error("Echec");
+
+      const dat = response.json();
+      console.log("Register :", dat);
+
+      setSuccess("Un email de vérification a été envoyé à votre adresse");
       setTimeout(() => {
-        router.push('/login?verified=false');
+        router.push("/auth/signin/");
       }, 2000);
-      
     } catch (err) {
-      setError("Erreur lors de la création du compte");
+      setError(`Erreur: ${err}`);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  // ) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
   return (
     <div className="w-full max-w-md">
@@ -101,19 +166,43 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name Field */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-              Nom complet
+            <label
+              htmlFor="first_name"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Prenom
             </label>
             <div className="relative">
               <User className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
               <input
-                id="name"
-                name="name"
+                id="first_name"
+                name="first_name"
                 type="text"
                 required
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
+                value={first_name}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border text-gray-400 border-gray-300 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
+                placeholder="Votre nom complet"
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              htmlFor="last_name"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Nom
+            </label>
+            <div className="relative">
+              <User className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <input
+                id="last_name"
+                name="last_name"
+                type="text"
+                required
+                value={last_name}
+                onChange={(e) => setLastName(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border text-gray-400 border-gray-300 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
                 placeholder="Votre nom complet"
               />
             </div>
@@ -121,7 +210,10 @@ export default function RegisterPage() {
 
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Adresse email
             </label>
             <div className="relative">
@@ -131,16 +223,16 @@ export default function RegisterPage() {
                 name="email"
                 type="email"
                 required
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 text-gray-400 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
                 placeholder="votre@email.com"
               />
             </div>
           </div>
 
           {/* Location Field */}
-          <div>
+          {/* <div>
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
               Localisation
             </label>
@@ -159,11 +251,14 @@ export default function RegisterPage() {
                 <option value="Autre">Autre (Nord-Kivu)</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Mot de passe
             </label>
             <div className="relative">
@@ -171,11 +266,11 @@ export default function RegisterPage() {
               <input
                 id="password"
                 name="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 required
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full pl-10 pr-12 py-3 border text-gray-400 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 placeholder="Minimum 6 caractères"
               />
               <button
@@ -183,26 +278,33 @@ export default function RegisterPage() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
 
           {/* Confirm Password Field */}
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Confirmer le mot de passe
             </label>
             <div className="relative">
               <Lock className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
               <input
                 id="confirmPassword"
-                name="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
+                name="password_confirm"
+                type={showConfirmPassword ? "text" : "password"}
                 required
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg text-gray-600 focus:ring-2 focus:ring-cardano-blue focus:border-cardano-blue transition-colors"
+                value={password_confirm}
+                onChange={(e) => setPasswdConfirm(e.target.value)}
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg text-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 placeholder="Retapez votre mot de passe"
               />
               <button
@@ -210,7 +312,11 @@ export default function RegisterPage() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {showConfirmPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
@@ -223,12 +329,18 @@ export default function RegisterPage() {
               className="w-4 h-4 text-cardano-blue border-gray-300 rounded focus:ring-cardano-blue mt-1"
             />
             <span className="text-sm text-gray-600">
-              J&apos;accepte les{' '}
-              <Link href="/terms" className="text-cardano-blue hover:text-cardano-light font-medium">
+              J&apos;accepte les{" "}
+              <Link
+                href="/terms"
+                className="text-cardano-blue hover:text-cardano-light font-medium"
+              >
                 conditions d&apos;utilisation
-              </Link>{' '}
-              et la{' '}
-              <Link href="/privacy" className="text-cardano-blue hover:text-cardano-light font-medium">
+              </Link>{" "}
+              et la{" "}
+              <Link
+                href="/privacy"
+                className="text-cardano-blue hover:text-cardano-light font-medium"
+              >
                 politique de confidentialité
               </Link>
             </span>
@@ -246,7 +358,7 @@ export default function RegisterPage() {
                 Création du compte...
               </div>
             ) : (
-              'Créer mon compte'
+              "Créer mon compte"
             )}
           </Button>
         </form>
@@ -261,9 +373,9 @@ export default function RegisterPage() {
         {/* Login Link */}
         <div className="text-center">
           <p className="text-gray-600">
-            Déjà un compte ?{' '}
-            <Link 
-              href="/auth/signin" 
+            Déjà un compte ?{" "}
+            <Link
+              href="/auth/signin"
               className="text-cardano-blue hover:text-cardano-light font-semibold"
             >
               Se connecter

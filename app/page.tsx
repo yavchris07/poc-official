@@ -196,6 +196,7 @@ import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/ui/footer";
 
 export default function Home() {
+
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Navigation */}
@@ -205,7 +206,7 @@ export default function Home() {
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-linear-to-r from-cardano-blue to-cardano-light rounded-xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-white" />
+                <Shield className="w-6 h-6 text-blue-600" />
               </div>
               <div>
                 <span className="text-xl font-bold bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
@@ -240,12 +241,12 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
               <Link href="/auth/signin">
-                <Button variant="ghost" className="text-gray-700">
+                <Button variant="ghost" className="text-gray-700 cursor-pointer">
                   Connexion
                 </Button>
               </Link>
-              <Link href="#">
-                <Button className="bg-linear-to-r from-blue-600 to-blue-400 hover:from-blue-400 hover:to-blue-400">
+              <Link href="/auth/signup">
+                <Button className="bg-linear-to-r from-blue-600 to-blue-400 hover:from-blue-400 hover:to-blue-400 cursor-pointer">
                   Commencer gratuitement
                 </Button>
               </Link>
@@ -262,7 +263,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             {" "}
             <div className="inline-flex items-center px-4 py-2 mt-14 mb-12 rounded-full bg-blue-100 text-blue-600 text-sm font-medium">
-               Projet Pilote - Ville de Goma & Nyiragongo
+              Projet Pilote - Ville de Goma & Nyiragongo
             </div>
             <h1 className="text-4xl mb-14 md:text-5xl font-bold text-gray-900">
               Prouvez ta competence.
@@ -301,10 +302,9 @@ export default function Home() {
             {/* Left Content */}
             <div className="space-y-8">
               <div className="space-y-4">
-                 
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                   La compétence
-                  <span className="block bg-linear-to-r from-cardano-blue to-cardano-light bg-clip-text text-transparent">
+                  <span className="block bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
                     mérite sa chance
                   </span>
                 </h1>
@@ -320,7 +320,7 @@ export default function Home() {
                 <Link href="/auth/signup">
                   <Button
                     size="lg"
-                    className="bg-linear-to-r from-cardano-blue to-cardano-light hover:from-cardano-light hover:to-cardano-blue text-white px-8 py-4 text-lg"
+                    className="bg-linear-to-r from-blue-600 to-blue-400 hover:from-blue-400 hover:to-blue-600 text-white px-8 py-4 text-lg cursor-pointer"
                   >
                     <GraduationCap className="w-5 h-5 mr-2" />
                     Commencer la formation
@@ -342,19 +342,19 @@ export default function Home() {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-8 pt-8">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-cardano-blue">
+                  <div className="text-2xl font-bold text-cardano-blue text-gray-400">
                     2 000+
                   </div>
                   <div className="text-sm text-gray-600">Jeunes visés</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-cardano-blue">
+                  <div className="text-2xl font-bold text-cardano-blue text-gray-400">
                     100%
                   </div>
                   <div className="text-sm text-gray-600">Gratuit</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-cardano-blue">
+                  <div className="text-2xl font-bold text-cardano-blue text-gray-400">
                     NFT
                   </div>
                   <div className="text-sm text-gray-600">Certification</div>
@@ -366,6 +366,17 @@ export default function Home() {
             <div className="relative">
               <div className="bg-linear-to-br from-cardano-blue/10 to-cardano-light/20 rounded-2xl p-8 border border-blue-200/50 backdrop-blur-sm">
                 <div className="grid grid-cols-2 gap-4">
+                  {/* Training Preview */}
+                  <div className="bg-white rounded-xl p-4 shadow-lg border">
+                    <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-3">
+                      <GraduationCap className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900">Formation</h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      5 modules gratuits
+                    </p>
+                  </div>
+
                   {/* NFT Certificate Preview */}
                   <div className="bg-white rounded-xl p-4 shadow-lg border">
                     <div className="w-12 h-12 bg-linear-to-r bg-blue-400 from-cardano-blue to-cardano-light rounded-lg flex items-center justify-center mb-3">
@@ -379,14 +390,14 @@ export default function Home() {
                     </p>
                   </div>
 
-                  {/* Training Preview */}
+                  {/* Cardano Integration */}
                   <div className="bg-white rounded-xl p-4 shadow-lg border">
-                    <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-3">
-                      <GraduationCap className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-3">
+                      <Star className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="font-semibold text-gray-900">Formation</h4>
+                    <h4 className="font-semibold text-gray-900">Cardano</h4>
                     <p className="text-sm text-gray-600 mt-1">
-                      5 modules gratuits
+                      Blockchain secure
                     </p>
                   </div>
 
@@ -402,22 +413,11 @@ export default function Home() {
                       Visibilité projets
                     </p>
                   </div>
-
-                  {/* Cardano Integration */}
-                  <div className="bg-white rounded-xl p-4 shadow-lg border">
-                    <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-3">
-                      <Star className="w-6 h-6 text-white" />
-                    </div>
-                    <h4 className="font-semibold text-gray-900">Cardano</h4>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Blockchain secure
-                    </p>
-                  </div>
                 </div>
 
                 {/* Callout */}
                 <div className="mt-6 bg-linear-to-r from-cardano-blue to-cardano-light rounded-lg p-4 text-white text-center">
-                  <p className="font-semibold">
+                  <p className="font-semibold text-gray-400">
                     🚀 Déjà +50 jeunes en attente de certification
                   </p>
                 </div>
@@ -574,7 +574,7 @@ const features = [
     icon: Users,
     title: "Base de Talents",
     description:
-      "Intégrez notre réseau de talents vérifiés accessible aux projets et employeurs.",
+      "Intégrez notre réseau de talents vérifiés accessible aux projets et employeurs et à Emurgo et Intersect",
     benefits: [
       "Visibilité projets Catalyst",
       "Matching intelligent",

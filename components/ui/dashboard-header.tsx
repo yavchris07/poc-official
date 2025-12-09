@@ -5,7 +5,7 @@ import { Bell, Search, User, LogOut, Settings } from 'lucide-react';
 // import { Button } from '@/components/ui/Button';
 
 export function DashboardHeader() {
-  const [notifications, setNotifications] = useState(3);
+  const [notifications, setNotifications] = useState(0);
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
@@ -37,12 +37,12 @@ export function DashboardHeader() {
           {/* User Menu */}
           <div className="relative">
             <button className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100">
-              <div className="w-8 h-8 bg-gradient-to-r from-cardano-blue to-cardano-light rounded-full flex items-center justify-center text-white font-semibold">
+              <div className="w-8 h-8 bg-linear-to-r from-cardano-blue to-cardano-light rounded-full flex items-center justify-center text-white font-semibold">
                 JK
               </div>
               <div className="hidden md:block text-left">
-                <div className="text-sm font-medium text-gray-900">Jean Kabasele</div>
-                <div className="text-xs text-gray-500">Étudiant</div>
+                <div className="text-sm font-medium text-gray-900">{localStorage.getItem('man1')} {localStorage.getItem('man2')}</div>
+                <div className="text-xs text-gray-500">Utilisateur POC</div>
               </div>
             </button>
 
