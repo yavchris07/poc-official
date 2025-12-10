@@ -7,12 +7,18 @@ import { useRouter } from "next/navigation";
 const ConnectWallet = () => {
   const router = useRouter();
   // const [adress, setAdress] = useState("");
+  const [token,setToken] = useState('');
   const [name, setName] = useState("");
   // const [network, setNetwork] = useState("preview");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const token = localStorage.getItem("auth_token");
+  // const token = localStorage.getItem("auth_token");
+  console.log('====',token)
+
+  useEffect(() => {
+    setToken(localStorage.getItem("auth_token") || "");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

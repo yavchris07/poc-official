@@ -16,7 +16,7 @@ import {
   Copy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import DashboardLayout from "./layout";
+// import DashboardLayout from "./layout";
 import { MapPin } from "@/components/ui/map-pin";
 import useFetchWallets from "@/hooks/fetch-wallet";
 // import { Button } from '@/components/ui/Button';
@@ -142,7 +142,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="mt-6">
-          <p className="text-blue-500 text-lg">
+          {/* <p className="text-blue-500 text-lg"> */}
             {" "}
             {wallets &&
               wallets.slice(0, 1).map((wallet) => (
@@ -160,7 +160,7 @@ export default function DashboardPage() {
                   </button>
                 </div>
               ))}
-          </p>
+          {/* </p> */}
         </div>
       </div>
 
