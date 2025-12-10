@@ -21,6 +21,11 @@ export default function useFetchWallets() {
         setPending(true);
         setError("");
 
+        if (typeof window === "undefined") {
+            setPending(false);
+            return;
+        }
+
         const token = localStorage.getItem("auth_token");
         console.log('xxxxxxxxxx', token)
 
