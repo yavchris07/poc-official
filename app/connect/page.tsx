@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Lock, AlertCircle, Share2, BookUser } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -12,6 +12,8 @@ const ConnectWallet = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const token = localStorage.getItem("auth_token");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -22,9 +24,10 @@ const ConnectWallet = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/wallets/create/`,
         {
           method: "POST",
-          // credentials: "include",
+          credentials: "include",
           headers: {
             "content-Type": "application/json",
+             "Authorization": `Token ${token}`
           },
           body: JSON.stringify({ name }),
         }
@@ -44,11 +47,13 @@ const ConnectWallet = () => {
         router.push("/dashboard");
       }, 1000);
     } catch (err) {
-      setError("Wallet not found");
+      setError("Erreur venant du serveur");
     } finally {
       setIsLoading(false);
     }
   };
+
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100 ">
@@ -61,7 +66,7 @@ const ConnectWallet = () => {
                 <Lock className="w-8 h-8 text-blue-400" />
               </div>
               <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Connectez votre wallet
+                Creation wallet
               </h1>
               <p className="text-gray-600">
                 Pour etre certifié en NFTs via Proof of Capacity
@@ -84,7 +89,7 @@ const ConnectWallet = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  Nom
+                  Nom de wallet
                 </label>
                 <div className="relative">
                   <BookUser className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -128,5 +133,3 @@ const ConnectWallet = () => {
 };
 
 export default ConnectWallet;
-
-

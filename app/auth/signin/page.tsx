@@ -44,19 +44,27 @@ export default function LoginPage() {
       }
 
       const data = await response.json();
-      console.log("Response data:", data);
+      // if (data.token) {
+      //   // token -> localStorage
+      //   localStorage.setItem("auth_token", data.token);
+      // }
+
+      // if (data.Cosession_id) {
+      //   // session -> cookie (client-side)
+      //   document.cookie = `sessionid=${data.Cosession_id}; path=/; SameSite=None; Secure`;
+      // }
+
+      // console.log("Response data:", data);
       localStorage.setItem("man", data.user.email);
       localStorage.setItem("man1", data.user.first_name);
       localStorage.setItem("man2", data.user.last_name);
+      document.cookie = `sessionid=${data.Cosession_id}; path=/; SameSite=None; Secure`;
+      localStorage.setItem("auth_token", data.token);
 
-      // Redirection temporaire pour la démo
-      setTimeout(() => {
-        // if(){}
-        router.push("/connect");
-        // router.push('/dashboard')
-      }, 1000);
+      router.push("/auth/loading");
+
     } catch (err) {
-      setError("Email ou mot de passe incorrect");
+      setError("Email ou mot de passe incorrect ⭐");
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +82,7 @@ export default function LoginPage() {
       <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-linear-to-r from-cardano-blue to-cardano-light rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-linear-to-r from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Lock className="w-8 h-8 text-blue-400" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Connexion</h1>
