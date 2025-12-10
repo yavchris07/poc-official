@@ -43,46 +43,20 @@ export default function RegisterPage() {
     setError("");
     setSuccess("");
 
-    // Validation
+    // Validation côté frontend
     if (password !== password_confirm) {
       setError("Les mots de passe ne correspondent pas");
       setIsLoading(false);
       return;
     }
 
-    if (password.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères");
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      // Simulation d'inscription - À remplacer par votre API
-      // email', 'first_name', 'last_name', 'password', 'password_confirm'
-
-      // const data = new FormData();
-      // data.append("first_name", formData.first_name);
-      // data.append("last_name", formData.last_name);
-      // data.append("email", formData.email);
-      // data.append("password", formData.password);
-      // data.append("password_confirm", formData.password_confirm);
-
-      // const response = await fetch(
-      //   `${process.env.NEXT_PUBLIC_API_URL}/auth/register/`,
-      //   {
-      //     method: "POST",
-      //     body: data, // ✔ pas de JSON
-      //     // PAS de Content-Type, le navigateur le met automatiquement
-      //   }
-      // );
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register/`,
         {
           method: "POST",
-          // credentials: "include",
           headers: {
-            "content-Type": "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             first_name,
@@ -91,44 +65,31 @@ export default function RegisterPage() {
             password,
             password_confirm,
           }),
-          // body:formDate
         }
       );
 
-      console.log(
-        "Registration attempt:",
-        first_name,
-        last_name,
-        email,
-        password,
-        password_confirm
-      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("REGISTER ERROR:", errorData);
+        setError(JSON.stringify(errorData));
+        setIsLoading(false);
+        return;
+      }
 
-      // Simulation d'envoi d'email de vérification
-      if (!response.ok) throw new Error("Echec");
+      const data = await response.json();
+      console.log("REGISTER SUCCESS:", data);
 
-      const dat = response.json();
-      console.log("Register :", dat);
-
-      setSuccess("Un email de vérification a été envoyé à votre adresse");
-      setTimeout(() => {
-        router.push("/auth/signin/");
-      }, 2000);
+      setSuccess("Un email de vérification a été envoyé à votre adresse.");
+      setTimeout(() => router.push("/auth/signin/"), 1500);
     } catch (err) {
-      setError(`Erreur: ${err}`);
+      if (err instanceof Error) {
+        setError(`Erreur : ${err.message}`);
+      }
+      setError(`Erreur : ${err}`);
     } finally {
       setIsLoading(false);
     }
   };
-
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  // ) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
 
   return (
     <div className="w-full max-w-md">
