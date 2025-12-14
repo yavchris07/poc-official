@@ -151,7 +151,6 @@ type Question = {
 // QUESTIONS PAR DOMAINE
 // --------------------
 
-
 const QUESTIONS: Record<string, Question[]> = {
   Blockchain: [
     {
@@ -229,7 +228,11 @@ const QUESTIONS: Record<string, Question[]> = {
     {
       q: "1. Quel est le mécanisme de consensus principal de Cardano ?",
       type: "qcm",
-      choices: ["Proof of Work", "Proof of Stake (Ouroboros)", "Proof of History"],
+      choices: [
+        "Proof of Work",
+        "Proof of Stake (Ouroboros)",
+        "Proof of History",
+      ],
       answer: 1,
     },
     {
@@ -312,6 +315,7 @@ const TestCompet = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [result, setResult] = useState<null | boolean>(null);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   // Questions dynamiques
   const questions = selectedSkill ? QUESTIONS[selectedSkill] || [] : [];
@@ -321,6 +325,10 @@ const TestCompet = () => {
     navigator.clipboard.writeText(text);
     window.alert("Adresse copiée avec succès !");
   };
+
+  useEffect(() => {
+    setToken(localStorage.getItem("auth_token") || "");
+  }, []);
 
   // -------- Vérifier test ----------
   const submitTest = async () => {
@@ -357,12 +365,13 @@ const TestCompet = () => {
       setLoading(true);
 
       await fetch(
-        `https://api-proof-capacity.onrender.com/nft/${walletId}/nfts/certification/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/nft/${walletId}/nfts/certification/`,
         {
           method: "POST",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
           },
           body: JSON.stringify({
             skill: selectedSkill,
@@ -413,7 +422,9 @@ const TestCompet = () => {
 
         {/* SKILLS */}
         <div className="bg-white rounded-xl m-6 p-6 shadow-sm border">
-          <h2 className="text-xl text-gray-700 font-bold mb-6">Choisir le domaine</h2>
+          <h2 className="text-xl text-gray-700 font-bold mb-6">
+            Choisir le domaine
+          </h2>
 
           <div className="flex flex-wrap gap-3">
             {user.skills.map((skill, index) => (
@@ -446,7 +457,10 @@ const TestCompet = () => {
                 {q.type === "qcm" ? (
                   <div className="mt-2 space-y-1">
                     {q.choices?.map((choice: string, i: number) => (
-                      <label key={i} className="flex items-center gap-2 text-gray-400">
+                      <label
+                        key={i}
+                        className="flex items-center gap-2 text-gray-400"
+                      >
                         <input
                           type="radio"
                           name={`q-${index}`}
