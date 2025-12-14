@@ -104,7 +104,7 @@ export default function DashboardPage() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    // toast
+    window.alert("Adresse copie avec succes !");
   };
 
   return (
@@ -142,24 +142,23 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="mt-6">
-          {/* <p className="text-blue-500 text-lg"> */}
-            {" "}
-            {wallets &&
-              wallets.slice(0, 1).map((wallet) => (
-                <div key={wallet.id} className="flex justify-between">
-                  <span key={wallet.id} className="text-gray-500">
-                    <p className="text-blue-500 text-lg">Mon Wallet adress :</p>{" "}
-                    {wallet.payment_address.substring(0, 67)}...
-                  </span>
-                  <button
-                    onClick={() => copyToClipboard(wallet.payment_address)}
-                    className="text-gray-400 hover:text-gray-600 p-1"
-                    title="Copier l'adresse"
-                  >
-                    <Copy className="w-3 h-3 text-blue-600 cursor-pointer" />
-                  </button>
-                </div>
-              ))}
+          {/* <p className="text-blue-500 text-lg"> */}{" "}
+          {wallets &&
+            wallets.slice(0, 1).map((wallet) => (
+              <div key={wallet.id} className="flex justify-between">
+                <span key={wallet.id} className="text-gray-500">
+                  <p className="text-blue-500 text-lg">Mon Wallet adress :</p>{" "}
+                  {wallet.payment_address.substring(0, 67)}...
+                </span>
+                <button
+                  onClick={() => copyToClipboard(wallet.payment_address)}
+                  className="text-gray-400 hover:text-gray-600 p-1"
+                  title="Copier l'adresse"
+                >
+                  <Copy className="w-3 h-3 text-blue-600 cursor-pointer" />
+                </button>
+              </div>
+            ))}
           {/* </p> */}
         </div>
       </div>
@@ -397,6 +396,29 @@ export default function DashboardPage() {
               {skill}
             </div>
           ))}
+          {/* <div className="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium border border-gray-300">
+            + Ajouter
+          </div> */}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        {/* <h2 className="text-xl font-bold text-gray-900 mb-6">
+          Mes compétences
+        </h2> */}
+        <div className="flex flex-wrap gap-3">
+           
+            <div
+              className="px-4 py-2 bg-linear-to-r from-blue-400 to-blue-600 text-white rounded-full text-sm font-medium"
+            >
+              <Link href='/formation'>Formation</Link>
+            </div>
+             <div
+              className="px-4 py-2 bg-linear-to-r from-blue-400 to-blue-600 text-white rounded-full text-sm font-medium"
+            >
+              <Link href='/test'>Test</Link>
+            </div>
+          
           {/* <div className="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium border border-gray-300">
             + Ajouter
           </div> */}

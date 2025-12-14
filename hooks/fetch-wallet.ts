@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 
-type Wallet = {
+export type Wallet = {
     id: number,
     name: string,
     payment_address: string,
