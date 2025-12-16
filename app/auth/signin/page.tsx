@@ -29,7 +29,7 @@ export default function LoginPage() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login/`,
         {
           method: "POST",
-          credentials: "include",
+          // credentials: "include",
           headers: {
             "content-Type": "application/json",
           },
