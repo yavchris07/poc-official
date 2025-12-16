@@ -27,7 +27,7 @@ const ConnectWallet = () => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/wallets/create/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/wallets/create/`,
         {
           method: "POST",
           credentials: "include",

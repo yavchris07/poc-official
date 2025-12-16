@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Play, CheckCircle, Copy } from "lucide-react";
 import useFetchWallets, { Wallet } from "@/hooks/fetch-wallet";
 import Link from "next/link";
+import useFetchCours from "@/hooks/fetch-cours";
 
 const COURSES = {
   Blockchain: {
@@ -34,6 +35,9 @@ export default function FormationThemes() {
   // const [user] = useState(userData);
 
   const { wallets } = useFetchWallets();
+  const { cours } = useFetchCours();
+
+  console.log("Course", cours);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -132,6 +136,8 @@ export default function FormationThemes() {
           </p>
         )}
 
+        <div></div>
+
         <div className="bg-white rounded-xl mt-6 p-6 border shadow-sm">
           <div className="flex gap-3">
             <Link
@@ -142,7 +148,6 @@ export default function FormationThemes() {
             </Link>
           </div>
         </div>
-
       </div>
     </div>
   );
