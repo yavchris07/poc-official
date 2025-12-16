@@ -58,7 +58,7 @@ export default function LoginPage() {
       localStorage.setItem("man", data.user.email);
       localStorage.setItem("man1", data.user.first_name);
       localStorage.setItem("man2", data.user.last_name);
-      document.cookie = `sessionid=${data.Cosession_id}; path=/; SameSite=None; Secure`;
+      // document.cookie = `sessionid=${data.Cosession_id}; path=/; SameSite=None; Secure`;
       localStorage.setItem("auth_token", data.token);
 
       router.push("/auth/loading");

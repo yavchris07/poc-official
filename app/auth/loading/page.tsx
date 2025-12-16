@@ -8,6 +8,7 @@ import { Shield } from "lucide-react";
 export default function LoadingAuthPage() {
   const router = useRouter();
   const { wallets, pending } = useFetchWallets();
+  console.log('====',wallets)
 
   useEffect(() => {
     if (pending) return; // On attend les wallets
