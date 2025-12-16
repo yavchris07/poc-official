@@ -30,7 +30,7 @@ const ConnectWallet = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/wallets/create/`,
         {
           method: "POST",
-          credentials: "include",
+          // credentials: "include",
           headers: {
             "content-Type": "application/json",
              "Authorization": `Token ${token}`
