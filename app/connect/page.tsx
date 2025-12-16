@@ -53,7 +53,7 @@ const ConnectWallet = () => {
         router.push("/dashboard");
       }, 1000);
     } catch (err) {
-      setError("Erreur venant du serveur");
+      setError(`Erreur: ${err}`);
     } finally {
       setIsLoading(false);
     }
