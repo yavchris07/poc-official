@@ -21,7 +21,7 @@ export default function useFetchCours() {
         console.log('xxxxxxxxxx', token)
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/videos/free`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/videos/free/`, {
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",

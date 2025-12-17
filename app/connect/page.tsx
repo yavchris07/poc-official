@@ -13,7 +13,6 @@ const ConnectWallet = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // const token = localStorage.getItem("auth_token");
   console.log('====',token)
 
   useEffect(() => {
