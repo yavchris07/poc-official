@@ -50,7 +50,7 @@ export default function useFetchCours() {
             }
 
             const data = await res.json();
-            setCours(data.wallets);
+            setCours(data);
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message || "Erreur inconnue");
