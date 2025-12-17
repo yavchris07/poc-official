@@ -196,7 +196,6 @@ import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/ui/footer";
 
 export default function Home() {
-
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Navigation */}
@@ -241,7 +240,10 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
               <Link href="/auth/signin">
-                <Button variant="ghost" className="text-gray-700 cursor-pointer">
+                <Button
+                  variant="ghost"
+                  className="text-gray-700 cursor-pointer"
+                >
                   Connexion
                 </Button>
               </Link>
@@ -266,16 +268,21 @@ export default function Home() {
               Projet Pilote - Ville de Goma & Nyiragongo
             </div>
             <h1 className="text-4xl mb-14 md:text-5xl font-bold text-gray-900">
-              Prouvez ta competence.
+              Prouvez votre competence.
               <span className="block bg-linear-to-br from-blue-600 to-blue-400 bg-clip-text text-transparent">
                 Augmenetez votre chance d&apos;etre embaucher.
               </span>{" "}
             </h1>{" "}
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-              Proof of capacity est une plateforme qui vous permet de prouver la
+              {/* Proof of capacity est une plateforme qui vous permet de prouver la
               competence et d&apos;augmenter votre chance d&apos;etre embaucher,
               non par affinite, ni reseau d&apos;influence mais uniquement par
-              merite{" "}
+              merite{" "} */}
+              Proof of Capacity une plateforme de formations gratuites pour
+              permettre aux jeunes de découvrir les opportunités réelles sur la
+              Blockchain CARDANO et augmenter la chance d&apos;être embaucher
+              par une certification sur une plateforme décentralisée non par
+              affinités ou influences mais uniquement par mérite.
             </p>
             {/* Trust Badges */}
             <div className="flex items-center justify-center gap-8 text-gray-500 text-sm">
@@ -435,8 +442,10 @@ export default function Home() {
               Une solution <span className="text-cardano-blue">complète</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              De la formation à l&apos;emploi, en passant par la certification
-              blockchain
+              {/* De la formation à l&apos;emploi, en passant par la certification
+              blockchain */}
+              De la formation à la découverte des opportunités réelles sur la
+              Blockchain CARDANO
             </p>
           </div>
 
@@ -550,7 +559,8 @@ const features = [
     icon: GraduationCap,
     title: "Formation Gratuite",
     description:
-      "Accédez à des cours en ligne de qualité sur Cardano et les technologies blockchain.",
+      // "Accédez à des cours en ligne de qualité sur Cardano et les technologies blockchain.",
+      "Accédez aux cours en ligne, faites votre choix. Avec la décentralisation chez CARDANO c'est possible de gagner la vie en distance.",
     benefits: [
       "5 modules vidéo interactifs",
       "Quiz d'évaluation",
@@ -577,6 +587,8 @@ const features = [
       "Intégrez notre réseau de talents vérifiés accessible aux projets et employeurs et à Emurgo et Intersect",
     benefits: [
       "Visibilité projets Catalyst",
+      "Gouvernance de CARDANO",
+      "Emurgo et Intersect.",
       "Matching intelligent",
       "Opportunités locales",
       "Réseau professionnel",

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
-import { Lock, AlertCircle, Share2, BookUser } from "lucide-react";
+import { Lock, AlertCircle, BookUser } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const ConnectWallet = () => {
