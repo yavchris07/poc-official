@@ -38,7 +38,6 @@ export default function useFetchCours() {
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/videos/free/`, {
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                     // "Authorization": `Token ${token}`
