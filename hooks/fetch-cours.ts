@@ -1,9 +1,25 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+type CourseLesson = {
+  id: number;
+  course_title: string;
+  instructor_name: string;
+  is_enrolled: boolean;
+  watch_progress: number; // en pourcentage (0-100)
+  is_completed: boolean;
+  title: string;
+  description: string;
+  video_url: string;
+  duration_minutes: number;
+  order: number;
+  is_preview: boolean;
+  course: number; // ID du cours parent
+};
+
 
 export default function useFetchCours() {
-    const [cours, setCours] = useState<[]>([]);
+    const [cours, setCours] = useState<CourseLesson[]>([]);
     const [pending, setPending] = useState<boolean>(true);
     const [fail, setError] = useState<string>("");
 
