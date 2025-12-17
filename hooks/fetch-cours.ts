@@ -17,15 +17,15 @@ export default function useFetchCours() {
             return;
         }
 
-        const token = localStorage.getItem("auth_token");
-        console.log('xxxxxxxxxx', token)
+        // const token = localStorage.getItem("auth_token");
+        // console.log('xxxxxxxxxx', token)
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/videos/free/`, {
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Token ${token}`
+                    // "Authorization": `Token ${token}`
                 },
 
             });
