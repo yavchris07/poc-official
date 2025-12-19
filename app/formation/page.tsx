@@ -110,10 +110,17 @@ export default function FormationThemes() {
     ? freeVideos.filter((v) => v.course_title === selectedCourse)
     : [];
 
+  function extractYoutubeId(url: string) {
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:shorts\/|watch\?v=))([^\?&]+)/
+    );
+    return match ? match[1] : "";
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* HERO */}
-      <div className="bg-linear-to-r from-blue-400 to-blue-600 p-8 text-white mb-6">
+      <div className="bg-linear-to-r from-blue-600 to-blue-400 p-8 text-white mb-6">
         <h1 className="text-3xl text-gray-200 font-bold">
           Bon retour, {man1} {man2} 👋
         </h1>
@@ -139,64 +146,7 @@ export default function FormationThemes() {
           📚 Formations — (par Modules)
         </h1>
 
-        {/* Liste des cours */}
-        {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          {Object.keys(COURSES).map((key: string) => (
-            <button
-              key={key}
-              onClick={() => setSelected(key as keyof typeof COURSES)}
-              className={`px-4 py-2 rounded-full text-white text-sm font-medium transition-all bg-linear-to-r from-blue-400 to-blue-600 hover:opacity-90 ${
-                selected === key ? "ring-2 ring-blue-500 ring-offset-2" : ""
-              }`}
-            >
-              {key}
-            </button>
-          ))}
-        </div> */}
-
-        {/* Zone formation */}
-        {/* {selected ? (
-          <div className="mt-6 p-5 border border-gray-200 rounded-xl bg-gray-50">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              {COURSES[selected].title}
-            </h2>
-            <p className="text-gray-600 mb-4">
-              {COURSES[selected].description}
-            </p>
-
-            {/* Player vidéo 
-            <div className="w-full aspect-video bg-black rounded-lg flex items-center justify-center text-white">
-              {COURSES[selected].videoUrl ? (
-                <video
-                  src={COURSES[selected].videoUrl}
-                  controls
-                  className="w-full h-full rounded-lg"
-                />
-              ) : (
-                <div className="flex flex-col items-center text-gray-300">
-                  <Play className="w-12 h-12 mb-3" />
-                  <span>Vidéo en cours d&apos;upload...</span>
-                </div>
-              )}
-            </div>
-
-            {/* Bouton pour passer au test 
-            <button
-              onClick={() => (window.location.href = `/test?theme=${selected}`)}
-              className="mt-5 flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow"
-            >
-              Commencer le test
-              <CheckCircle className="w-5 h-5" />
-            </button>
-          </div>
-        ) : (
-          <p className="text-gray-500 text-center mt-10">
-            Sélectionne un thème pour commencer la formation.
-          </p>
-        )} */}
-
-        {/* New  */}
-
+        {/* Ajust */}
         <div>
           {/* Liste des thèmes */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -204,7 +154,7 @@ export default function FormationThemes() {
               <button
                 key={theme}
                 onClick={() => setSelectedCourse(theme)}
-                className={`px-4 py-2 rounded-full text-white text-sm font-medium transition-all bg-gradient-to-r from-blue-400 to-blue-600 hover:opacity-90 ${
+                className={`px-4 py-2 rounded-full text-white text-sm font-medium transition-all bg-linear-to-r from-blue-600 to-blue-400 hover:opacity-90 ${
                   selectedCourse === theme
                     ? "ring-2 ring-blue-500 ring-offset-2"
                     : ""
@@ -228,28 +178,33 @@ export default function FormationThemes() {
                   </h2>
                   <p className="text-gray-600 mb-4">{video.description}</p>
 
-                  {/* Player vidéo */}
-                  <div className="w-full aspect-video bg-black rounded-lg flex items-center justify-center text-white">
-                    {video.video_url ? (
-                      <video
-                        src={video.video_url}
-                        controls
-                        className="w-full h-full rounded-lg"
+                  {/* Player YouTube */}
+                  {video.video_url ? (
+                    <div className="w-full aspect-video rounded-lg overflow-hidden mb-4">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${extractYoutubeId(
+                          video.video_url
+                        )}`}
+                        title={video.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
                       />
-                    ) : (
-                      <div className="flex flex-col items-center text-gray-300">
-                        <Play className="w-12 h-12 mb-3" />
-                        <span>Vidéo en cours d&apos;upload...</span>
-                      </div>
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center text-gray-300 mb-4">
+                      <Play className="w-12 h-12 mb-3" />
+                      <span>Vidéo en cours d&apos;upload...</span>
+                    </div>
+                  )}
 
                   {/* Bouton pour passer au test */}
                   <button
                     onClick={() =>
                       (window.location.href = `/test?theme=${selectedCourse}`)
                     }
-                    className="mt-5 flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow"
+                    className="mt-2 flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow"
                   >
                     Commencer le test
                     <CheckCircle className="w-5 h-5" />
